@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
-// import reducer from './reducers/index'
 const baseURL = 'https://sugoku.herokuapp.com'
 
 const initialState = {
@@ -11,7 +10,9 @@ const initialState = {
     loadingButton: false,
     solveBoard: [],
     name: '',
-    difficulty: ''
+    difficulty: '',
+    visible: false,
+    errText: ''
 }
 
 export const fetchBoard = (difficulty) => {
@@ -80,9 +81,14 @@ export const fetchBoard = (difficulty) => {
             dispatch ({ type: 'SET_STATUS', payload: data.status })
 
           if(data.status === 'unsolved') {
-            alert('Please fill all the empty number!')
+
+            dispatch ({ type: 'SET_VISIBLE', payload: true })
+            dispatch ({ type: 'SET_ERROR_TEXT', payload: 'Please fill all the empty number!' })
+
           } else if (data.status === 'broken') {
-            alert('Some number are incorrect')
+
+            dispatch ({ type: 'SET_VISIBLE', payload: true })
+            dispatch ({ type: 'SET_ERROR_TEXT', payload: 'Some number are incorrect' })
           } else if (data.status === 'solved') {
             navigation.navigate('Finish', {
               name: name
@@ -149,6 +155,10 @@ function reducer(state = initialState, action ) {
             return { ...state, loadingButton: action.payload}
         case 'SET_DIFFICULTY':
             return { ...state, difficulty: action.payload}
+        case 'SET_VISIBLE':
+            return { ...state, visible: action.payload}
+        case 'SET_ERROR_TEXT':
+            return { ...state, errText: action.payload}
         default:
             return state
     }
