@@ -159,6 +159,8 @@ function reducer(state = initialState, action ) {
             return { ...state, visible: action.payload}
         case 'SET_ERROR_TEXT':
             return { ...state, errText: action.payload}
+        case 'RESET_ALL_BOARDS':
+          return { ...state, data: action.payload, input: action.payload, solveBoard: action.payload}
         default:
             return state
     }
