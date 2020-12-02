@@ -105,7 +105,7 @@ function Board ({route, navigation}) {
         <Button title="Validate"  loading={loadingButton} onPress={validate} style={styles.textBtn}>{loadingButton === false ? 'Validate' : ''}</Button>
 
 
-        <Button title="Solve" loading={loadingButton}  onPress={solve} style={styles.textBtn}>{loadingButton === false ? 'Solve' : ''}</Button>
+        <Button title="Solve" loading={loadingButton}  onPress={solve} style={styles.textBtn} disabled={status === 'solved' ? true : false}>{loadingButton === false ? 'Solve' : ''}</Button>
 
       </View>
       <Snackbar
